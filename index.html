@@ -1,854 +1,1263 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <title>Calculadora - Inversiones</title>
-  <style>
-    @font-face {
-      font-family: 'Neptune';
-      src: url('Neptune-Regular.ttf');
-      font-weight: normal;
-    }
+<body>
 
-    @font-face {
-      font-family: 'Neptune';
-      src: url('Neptune-Bold.ttf');
-      font-weight: bold;
-    }
+  <head>
+    <title>Calculadora - Inversiones</title>
+    <style>
+      @font-face {
+        font-family: 'Neptune';
+        src: url('Neptune-Regular.ttf');
+        font-weight: normal;
+      }
 
-    body {
-      font-family: 'Neptune', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+      @font-face {
+        font-family: 'Neptune';
+        src: url('Neptune-Bold.ttf');
+        font-weight: bold;
+      }
 
-    label {
-      color: #757575;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      gap: 48px;
-      @media screen and (max-width: 768px) {
-      flex-direction: column;
-    }
-    }
-
-    .form {
-      display: flex;
-
-    }
-
-
-    .graphicContainer {
-      margin-top: 1rem;
-    }
-
-    .graphic {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-      min-height: 347px;
-
-
-
-    }
-
-    .line {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .amountContainer {
-      font-size: 24px;
-      display: flex;
-
-      border-bottom-width: 1.44px;
-      border-bottom-style: solid;
-      border-bottom-color: #dedede;
-      padding-bottom: 12px;
-
-    }
-
-    .amount {
-      width: 7rem;
-      border: none;
-      font-size: 24px;
-      padding: 0;
-
-
-    }
-
-
-
-    .radioGroup {
-      width: 100%;
-      display: grid;
-      column-gap: 2rem;
-      row-gap: 11px;
-      grid-template-columns: 1fr 1fr 300px;
-      margin-bottom: 12px;
-    }
-
-    .radioGroupItem {
-      display: flex;
-      align-items: center;
-      justify-items: center;
-      gap: 9px;
-    }
-
-    .resultado {
-      font-family: 'Neptune', sans-serif;
-      font-size: 46px;
-      font-weight: 800;
-      margin-top: 10px;
-      margin-bottom: 1rem;
-
-    }
-
-    
-    h1 {
-      display: flex;
-      justify-content: center;
-      font-size: 50px;
-      font-weight: 500;
-    }
-
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-
-    .repeticionesContainer {
-
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 0.75rem;
-
-
-    }
-
-    .repeticionesContainer>label {
-      padding: 0;
-      margin: 0;
-    }
-
-    .repeticiones {
-      border: none;
-      font-size: 24px;
-      margin: 0;
-      padding-bottom: 10px;
-      border-bottom: 1.44px solid #dedede;
-
-    }
-
-    input[type="radio"] {
-      margin: 0;
-    }
-
-    input:focus {
-      outline: none;
-    }
-
-    .monthsContainer {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: #CFCDCD;
-      margin-left: 0.2rem;
-
-    }
-
-    .progressContainer {
-      width: 100%;
-    }
-
-    /*********** Baseline, reset styles ***********/
-    .progress {
-      margin-top: 1rem;
-      appearance: none;
-      /* background: transparent; */
-      cursor: pointer;
-      /* width: 100%; */
-      background: linear-gradient(to right, #000 0%, #000 0%, #DEDEDE 0%, #DEDEDE 100%);
-      border-radius: 8px;
-      height: 7px;
-      width: 100%;
-      outline: none;
-      -webkit-appearance: none;
-    }
-
-    /* Removes default focus */
-    .progress:focus {
-      outline: none;
-    }
-
-    /******** Chrome, Safari, Opera and Edge Chromium styles ********/
-    /* slider track */
-    .progress::-webkit-slider-runnable-track {
-      border-radius: 2rem;
-      height: 2px;
-    }
-
-    /* slider thumb */
-    .progress::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      margin-top: -7px;
-      background-color: #fff;
-      outline: 4px solid #fff;
-      border: 2px solid #000;
-      border-radius: 2rem;
-      height: 1rem;
-      width: 1rem;
-    }
-
-    /*********** Firefox styles ***********/
-    /* slider track */
-    .progress::-moz-range-track {
-      background-color: #000000;
-      border-radius: 2rem;
-      height: 2px;
-    }
-
-    /* slider thumb */
-    .progress::-moz-range-thumb {
-      background-color: #000000;
-      border: none;
-      border-radius: 2rem;
-      height: 1rem;
-      width: 1rem;
-    }
-
-    .progress:focus::-moz-range-thumb {
-      outline: 3px solid #000000;
-      outline-offset: 0.125rem;
-    }
-
-
-    .slide {
-      display: none;
-    }
-
-    /* Responsive */
-    @media screen and (max-width: 960px) {
-      .form {
+      body {
+        font-family: 'Neptune', sans-serif;
+        display: flex;
         flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        color: #757575;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 100px;
+
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+        }
+      }
+
+      .form {
+        display: flex;
+      }
+
+      .headTitle {
+        font-family: 'PP Fragment', sans-serif;
+        font-size: 56px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 61.6px;
+        margin-top: 103px;
+        margin-bottom: 32px;
+
+        @media screen and (max-width: 640px) {
+          font-size: 32px;
+          margin-top: unset;
+          margin-bottom: 24px;
+        }
+      }
+
+      .graphicContainer {
+        margin-top: 40px;
       }
 
       .graphic {
-        margin-left: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 347px;
+        border-radius: 0px 67.426px 0px 0px;
+        border: 1px solid #EDEDED;
+        background: #FFF;
+        box-shadow: 0px 5.394px 53.94px 0px rgba(210, 210, 210, 0.25);
+        margin-top: 32px;
+        padding: 77px 64px;
 
+        @media screen and (max-width: 640px) {
+          margin-top: unset;
+          padding: 50px 40px !important;
+        }
       }
 
-      .radioGroup {
-        grid-template-columns: 120px 1fr;
+      .totalBalance {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
-    }
 
-    @media screen and (max-width: 500px) {
-      .progressContainer {
-        width: 100%;
-        max-width: 390px;
+      .futureBalance {
+        color: #000;
+        font-family: 'Neptune', sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17.6px;
+
+        @media screen and (max-width: 640px) {
+          font-size: 14px;
+        }
+
+        @media screen and (max-width: 460px) {
+          max-width: 145px;
+        }
       }
-    }
 
-    @media screen and (max-width: 640px) {
-      .slide {
+      .totalRetenciones {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .retencionesLabel {
+        color: #000;
+        font-family: 'Neptune', sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17.6px;
+
+        @media screen and (max-width: 640px) {
+          font-size: 14px;
+        }
+      }
+
+      .resultado {
+        color: #3B82F6;
+        font-family: 'Neptune', sans-serif;
+        font-size: 35px;
+        font-weight: 400;
+        line-height: 38.5px;
+
+        @media screen and (max-width: 640px) {
+          font-size: 27px;
+        }
+      }
+
+      .retenciones {
+        color: #000;
+        font-family: 'Neptune', sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 24px;
+
+        @media screen and (max-width: 640px) {
+          font-size: 18px;
+        }
+      }
+
+      .line {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .amountTitle {
+        color: #757575;
+        font-family: 'Neptune', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 17.6px;
+        margin-bottom: 10px;
+
+        @media screen and (max-width: 640px) {
+          margin-bottom: 15px;
+        }
+      }
+
+      .amountContainer {
+        max-width: 371px;
+        font-size: 24px;
+        display: flex;
+        font-weight: 400;
+        border-bottom-width: 1.44px;
+        border-bottom-style: solid;
+        border-bottom-color: #dedede;
+        padding-bottom: 12px;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .amount {
+        width: 130px;
+        border: none;
+        font-size: 24px;
+        padding: 0;
+
+        @media screen and (max-width: 640px) {
+          width: 120px;
+          font-size: 22px;
+        }
+      }
+
+      .currency {
+        color: #000;
+        font-family: 'Neptune', sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 28.8px;
+
+        @media screen and (max-width: 640px) {
+          font-size: 22px;
+        }
+      }
+
+      .amountButtonContainer {
+        display: flex;
+        gap: 12px;
+      }
+
+      .counterButton {
+        height: 34px;
+        width: 34px;
+        border: 1px solid #BBBBBB;
+        background-color: #fff;
+        font-size: 29px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: .5rem;
-        font-size: 14px;
-        color: #BBBBBB;
+        cursor: pointer;
       }
-    }
-  </style>
-</head>
-<div class="container">
-  <div class="form">
-    <form>
-      <div class="line">
-        <label for="x">Monto a invertir</label>
-        <div class="amountContainer">
-          <span>$</span>
-          <input id="x" name="monto" class="amount" value="10000" required oninput="validarNumero(this), calcular()" />
-          <span style="margin-left: 8px;">MXN</span>
-        </div>
-      </div>
 
-      <div class="line">
-        <label>Selecciona el plazo</label>
-        <div class="radioGroup">
-          <div class="radioGroupItem">
-            <input type="radio" id="opcion1" name="opcionGroup" value="opcion1" onclick="actualizarValores(this)"
-              checked />
-            A la vista
-          </div>
-          <div class="radioGroupItem">
-            <input type="radio" id="opcion2" name="opcionGroup" value="opcion2" onclick="actualizarValores(this)"
-              disabled />
-            <span style="color: gray;">28 días</span>
-          </div>
-          <div class="radioGroupItem">
-            <input type="radio" id="opcion3" name="opcionGroup" value="opcion3" onclick="actualizarValores(this)" />
-            91 días
-          </div>
-          <div class="radioGroupItem">
-            <input type="radio" id="opcion4" name="opcionGroup" value="opcion4" onclick="actualizarValores(this)" />
-            182 días
-          </div>
-          <div class="radioGroupItem">
-            <input type="radio" id="opcion6" name="opcionGroup" value="opcion6" onclick="actualizarValores(this)" />
-            364 días
-          </div>
-          <div class="radioGroupItem">
-            <input type="radio" id="opcion5" name="opcionGroup" value="opcion5" onclick="actualizarValores(this)" />
-            364 días (con intereses cada 28 días)
-          </div>
-        </div>
-      </div>
-
-
-
-      <div style="display: block;">
-        <p>Tasa: <span id="y">11.2</span></p>
-        <p>Duración: <span id="z">30</span></p>
-      </div>
-      <div class="repeticionesContainer">
-        <label id="title" for="repeticiones">Años a invertir</label>
-
-        <input type="number" id="repeticiones" onkeyup="validar(this.value, event)" min="1" max="12"
-          pattern="[1-9]|1[0-2]" class="repeticiones" />
-        <div class="progressContainer">
-          <input type="range" class="progress" id="months" min="1" max="12" step="1" onchange="calcular()" />
-        </div>
-
-        <div class="monthsContainer">
-          <span>1</span>
-          <span>12</span>
-        </div>
-      </div>
-    </form>
-
-    <span class="slide">Desliza para ver más <img src="arrowDropDown.png" alt="Arrow drop down" /></span>
-  </div>
-
-  <div class="graphic">
-    <label>Potencial balance a futuro</label>
-    <span class="resultado" id="resultado">$0</span>
-    <ul id="listaResultados" style="display: none">
-      Los resultados calculados se agregarán aquí como elementos de lista
-    </ul>
-    <div class="graphicContainer">
-     <canvas id="myChart" width="417px" height="300px"></canvas>
-    </div>
-
-  </div>
-</div>
-
-
-
-
-
-
-
-<script src="https://refreshless.com/nouislider/dist/nouislider.js?v=1550"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script src="https://refreshless.com/nouislider/documentation/assets/wNumb.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
-
-
-<script>
-
-
-  function actualizarValores(radioButton) {
-    var yElement = document.getElementById("y");
-    var zElement = document.getElementById("z");
-
-    switch (radioButton.value) {
-      case "opcion1":
-        yElement.textContent = "11.2";
-        zElement.textContent = "30";
-        break;
-      case "opcion2":
-        yElement.textContent = "0";
-        zElement.textContent = "28";
-        break;
-      case "opcion3":
-        yElement.textContent = "12";
-        zElement.textContent = "91";
-        break;
-      case "opcion4":
-        yElement.textContent = "12.50";
-        zElement.textContent = "182";
-        break;
-      case "opcion5":
-        yElement.textContent = "13";
-        zElement.textContent = "364";
-        break;
-      case "opcion6":
-        yElement.textContent = "13.50";
-        zElement.textContent = "364";
-        break;
-      default:
-        yElement.textContent = "11.2";
-        zElement.textContent = "30";
-    }
-
-    calcular(radioButton.value); // Calcular automáticamente al cambiar la opción seleccionada
-  }
-
-
-  function validar(value, event) {
-    if (parseInt(value) > 12 || value.length > 2) {
-      event.preventDefault();
-      const repeticiones = document.getElementById("repeticiones");
-      repeticiones.value = 1;
-      return;
-    }
-    return calcular();
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const repeticionesInput = document.getElementById("repeticiones");
-    const monthsInput = document.getElementById("months");
-
-    repeticionesInput.value = 2;
-    monthsInput.value = 2;
-
-    // Actualiza la barra de progreso
-    const progress = document.querySelector('.progress');
-    var value = Math.floor((monthsInput.value / 12) * 100) - 4;
-    progress.style.background = `linear-gradient(to right, #000 0%, #000 ${value}%, #DEDEDE ${value}%, #DEDEDE 100%)`;
-  });
-
-
-
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    var radioButtons = document.getElementsByName("opcionGroup");
-    var radioButtonValue;
-    for (var i = 0; i < radioButtons.length; i++) {
-      if (radioButtons[i].checked) {
-        radioButtonValue = radioButtons[i].value;
-        break;
+      .disclaimer {
+        color: #CFCDCD;
+        font-family: 'Neptune', sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 19.5px;
+        margin-top: 8px;
       }
-    }
-    actualizarValores(document.querySelector('input[name="opcionGroup"]:checked'));
-  });
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const repeticionesInput = document.getElementById("repeticiones");
-    repeticionesInput.value = 2;
-    validar(2, null);
-  });
+      .chooseInvestedTerm {
+        color: #757575;
+        font-family: 'Neptune', sans-serif;
+        font-size: 16px !important;
+        font-weight: 400;
+        line-height: 17.6px;
+        margin-top: 32px;
+        margin-bottom: 12px;
 
-
-  function calcular(radioButtonOption) {
-    if (radioButtonOption === undefined) {
-      var radioButtons = document.getElementsByName("opcionGroup");
-      for (var i = 0; i < radioButtons.length; i++) {
-        if (radioButtons[i].checked) {
-          radioButtonOption = radioButtons[i].value;
+        @media screen and (max-width: 640px) {
+          margin-bottom: 15px;
         }
       }
+
+      input {
+        outline: none;
+      }
+
+      input[type="radio"] {
+        display: none;
+      }
+
+      .custom-radio {
+        display: flex;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #BBB;
+        border-radius: 50%;
+        position: relative;
+        cursor: pointer;
+      }
+
+      input[type="radio"]:checked+.custom-radio {
+        background-color: #2437F5;
+        border: 2px solid #2437F5;
+      }
+
+      .custom-radio::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: none;
+      }
+
+      input[type="radio"]:checked+.custom-radio::after {
+        display: block;
+      }
+
+      .radioGroup {
+        width: 100%;
+        display: grid;
+        column-gap: 2rem;
+        row-gap: 11px;
+        grid-template-columns: 1fr 1fr 300px;
+        margin-bottom: 12px;
+        color: #2C2C2C;
+
+        @media screen and (max-width: 640px) {
+          row-gap: 13px;
+        }
+      }
+
+      .radioGroupItem {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        gap: 9px;
+        font-size: 16px;
+
+        @media screen and (max-width: 640px) {
+          font-size: 14px;
+        }
+      }
+
+      h1 {
+        display: flex;
+        justify-content: center;
+        font-size: 50px;
+        font-weight: 500;
+      }
+
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+
+
+      .repeticionesContainer {
+        max-width: 371px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 32px;
+        border-bottom: 1.44px solid #dedede;
+        padding-bottom: 12px;
+      }
+
+      .repeticionesContainer>label {
+        padding: 0;
+        margin: 0;
+      }
+
+      .timeToInvest {
+        color: #757575;
+        font-family: 'Neptune', sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17.6px;
+        margin-bottom: 8px !important;
+      }
+
+      .repeticionesInputWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .repeticiones {
+        border: none;
+        font-size: 24px;
+        margin: 0;
+        padding-bottom: 10px;
+        width: 30px;
+      }
+
+      .termToInvest {
+        color: #000;
+        font-family: 'Neptune', sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 28.8px;
+      }
+
+      .monthsContainer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #CFCDCD;
+        margin-left: 0.2rem;
+      }
+
+      .termDisclaimerWrapper {
+        display: flex;
+        gap: 4px;
+      }
+
+      .progressContainer {
+        width: 100%;
+      }
+
+      /*********** Baseline, reset styles ***********/
+      .progress {
+        margin-top: 1rem;
+        appearance: none;
+        /* background: transparent; */
+        cursor: pointer;
+        /* width: 100%; */
+        background: linear-gradient(to right, #000 0%, #000 0%, #DEDEDE 0%, #DEDEDE 100%);
+        border-radius: 8px;
+        height: 7px;
+        width: 100%;
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      /* Removes default focus */
+      .progress:focus {
+        outline: none;
+      }
+
+      /******** Chrome, Safari, Opera and Edge Chromium styles ********/
+      /* slider track */
+      .progress::-webkit-slider-runnable-track {
+        border-radius: 2rem;
+        height: 2px;
+      }
+
+      /* slider thumb */
+      .progress::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -7px;
+        background-color: #fff;
+        outline: 4px solid #fff;
+        border: 2px solid #000;
+        border-radius: 2rem;
+        height: 1rem;
+        width: 1rem;
+      }
+
+      /*********** Firefox styles ***********/
+      /* slider track */
+      .progress::-moz-range-track {
+        background-color: #000000;
+        border-radius: 2rem;
+        height: 2px;
+      }
+
+      /* slider thumb */
+      .progress::-moz-range-thumb {
+        background-color: #000000;
+        border: none;
+        border-radius: 2rem;
+        height: 1rem;
+        width: 1rem;
+      }
+
+      .progress:focus::-moz-range-thumb {
+        outline: 3px solid #000000;
+        outline-offset: 0.125rem;
+      }
+
+
+      .slide {
+        display: none;
+      }
+
+      /* Responsive */
+      @media screen and (max-width: 960px) {
+        .form {
+          flex-direction: column;
+        }
+
+        .graphic {
+          margin-left: 0;
+
+        }
+
+        .radioGroup {
+          grid-template-columns: 120px 1fr;
+        }
+      }
+
+      @media screen and (max-width: 500px) {
+        .progressContainer {
+          width: 100%;
+          max-width: 390px;
+        }
+      }
+
+      @media screen and (max-width: 640px) {
+        .slide {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: .5rem;
+          font-size: 14px;
+          color: #BBBBBB;
+        }
+      }
+    </style>
+  </head>
+
+
+  <div class="container">
+    <div class="form">
+      <form>
+        <p class="headTitle">Simula tu rendimiento</p>
+
+        <div class="line">
+          <label class="amountTitle" for="x">Monto a invertir</label>
+          <div class="amountContainer">
+            <div>
+              <span>$</span>
+              <input id="x" name="monto" class="amount" value="10000" required
+                oninput="validarNumero(this), calcular(), calcularRetencion(parseInt(document.getElementById('z').textContent))" />
+              <span class="currency">MXN</span>
+            </div>
+
+            <div class="amountButtonContainer">
+              <button type="button" class="counterButton" onclick="decrementarMonto()"><img
+                  src="substract.png" /></button>
+              <button type="button" class="counterButton" onclick="incrementarMonto()"><img src="add.png" /></button>
+            </div>
+          </div>
+
+          <p class="disclaimer">Hasta $10,000,000 MXN</p>
+        </div>
+
+        <div class="line">
+          <label class="chooseInvestedTerm">Selecciona el plazo</label>
+          <div class="radioGroup">
+            <div class="radioGroupItem">
+              <input type="radio" id="opcion1" name="opcionGroup" value="opcion1" onclick="actualizarValores(this)"
+                checked />
+              <label for="opcion1" class="custom-radio"><img src="done.svg" /></label>
+              A la vista
+            </div>
+            <div class="radioGroupItem">
+              <input type="radio" id="opcion2" name="opcionGroup" value="opcion2" onclick="actualizarValores(this)" />
+              <label for="opcion2" class="custom-radio"><img src="done.svg" /></label>
+              28 días
+            </div>
+            <div class="radioGroupItem">
+              <input type="radio" id="opcion3" name="opcionGroup" value="opcion3" onclick="actualizarValores(this)" />
+              <label for="opcion3" class="custom-radio"><img src="done.svg" /></label>
+              91 días
+            </div>
+            <div class="radioGroupItem">
+              <input type="radio" id="opcion4" name="opcionGroup" value="opcion4" onclick="actualizarValores(this)" />
+              <label for="opcion4" class="custom-radio"><img src="done.svg" /></label>
+              182 días
+            </div>
+            <div class="radioGroupItem">
+              <input type="radio" id="opcion6" name="opcionGroup" value="opcion6" onclick="actualizarValores(this)" />
+              <label for="opcion6" class="custom-radio"><img src="done.svg" /></label>
+              364 días
+            </div>
+            <div class="radioGroupItem">
+              <input type="radio" id="opcion5" name="opcionGroup" value="opcion5" onclick="actualizarValores(this)" />
+              <label for="opcion5" class="custom-radio"><img src="done.svg" /></label>
+              364 días (con intereses cada 28 días)
+            </div>
+          </div>
+        </div>
+
+        <div style="display: none;">
+          <p>Tasa: <span id="y">11.2</span></p>
+          <p>Duración: <span id="z">30</span></p>
+        </div>
+
+        <div class="repeticionesContainer">
+          <label class="timeToInvest" id="title" for="repeticiones">Años a invertir</label>
+
+          <div class="repeticionesInputWrapper">
+            <div>
+              <input type="number" id="repeticiones"
+                onkeyup="validar(this.value, event), calcularRetencion(parseInt(document.getElementById('z').textContent))"
+                min="1" max="12" pattern="[1-9]|1[0-2]" class="repeticiones" />
+              <span class="termToInvest" id="termToInvest">meses</span>
+            </div>
+
+            <div class="amountButtonContainer">
+              <button type="button" class="counterButton" onclick="decrementarRepeticiones()"><img
+                  src="substract.png" /></button>
+              <button type="button" class="counterButton" onclick="incrementarRepeticiones()"><img
+                  src="add.png" /></button>
+            </div>
+          </div>
+
+          <div style="display: none;" class="progressContainer">
+            <input type="range" class="progress" id="months" min="1" max="12" step="1"
+              onchange="calcular(), calcularRetencion(parseInt(document.getElementById('z').textContent))" />
+          </div>
+
+          <div style="display: none;" class="monthsContainer">
+            <span>1</span>
+            <span>12</span>
+          </div>
+        </div>
+
+        <div class="termDisclaimerWrapper">
+          <p class="disclaimer">Hasta 12
+          <p class="disclaimer" id="termDisclaimer">meses</p>
+        </div>
+        </p>
+      </form>
+
+      <span class="slide">Desliza para ver más <img src="arrowDropDown.png" alt="Arrow drop down" /></span>
+    </div>
+
+    <div class="graphic">
+      <div class="totalBalance">
+        <label class="futureBalance">Saldo a futuro <br>(capital y rendimiento)</label>
+        <span class="resultado" id="resultado">$0</span>
+      </div>
+
+      <div class="totalRetenciones">
+        <label class="retencionesLabel">Impuestos</label>
+        <span class="retenciones" id="retenciones">$0</span>
+      </div>
+
+      <ul id="listaResultados" style="display: none">
+        Los resultados calculados se agregarán aquí como elementos de lista
+      </ul>
+      <div class="graphicContainer">
+        <canvas id="myChart" width="417px" height="300px"></canvas>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <script src="https://refreshless.com/nouislider/dist/nouislider.js?v=1550"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script src="https://refreshless.com/nouislider/documentation/assets/wNumb.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+
+
+  <script>
+
+    // UMA
+    const UMA = 108.57;
+
+    // Retención en porcentaje
+    const retencion = 0.50;
+
+    // Retención en decimal
+    const retencionDecimal = retencion / 100;
+
+    // Calculo del UMA
+    const calculodelUMA = UMA * 12 * 30.4 * 5;
+
+    function calcularRetencion(plazo) {
+      var montoAInvertir = parseFloat(document.getElementById("x").value.replace(/\D/g, ''));
+
+      // Array para almacenar las retenciones de todas las duraciones
+      var retencionesDuraciones = [];
+
+      // Iterar sobre todas las duraciones de 1 a 12
+      for (var i = 1; i <= 12; i++) {
+        var duracion = i; // Duración actual
+
+        // Calcular la retención para la duración actual
+        var retencion = calcularRetencionIndividual(montoAInvertir, duracion, plazo);
+
+        // Guardar la retención en el array
+        retencionesDuraciones.push(retencion);
+      }
+
+      // Obtener la duración seleccionada
+      var duracionSeleccionada = parseInt(document.getElementById('repeticiones').value);
+
+      // Sumar las retenciones de las duraciones anteriores a la duración seleccionada
+      var retencionTotal = retencionesDuraciones.slice(0, duracionSeleccionada).reduce((a, b) => a + b, 0);
+
+      // Mostrar el resultado en el DOM
+      document.getElementById("retenciones").textContent = '$' + retencionTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    // var x = parseFloat(document.getElementById("x").value);
-    var y = parseFloat(document.getElementById("y").textContent);
-    var z = parseFloat(document.getElementById("z").textContent);
+    function calcularRetencionIndividual(montoAInvertir, duracion, plazo) {
+      // Si el monto a invertir es menor o igual a 0 o menor al cálculo del UMA, la retención es 0
+      if (!montoAInvertir || montoAInvertir <= 0 || montoAInvertir < calculodelUMA) {
+        return 0;
+      }
 
+      // Si la duración es menor o igual a 2, retornosSumados será un array vacío
+      var retornosSumados = [];
+      if (duracion >= 2) {
+        retornosSumados = retornos.slice(0, duracion - 1);
+      }
 
-    var inputElement = document.getElementById("x");
+      // Sumar los elementos de la lista retornos a partir de la duración deseada
+      var totalRetornos = retornosSumados.reduce((a, b) => a + b, 0);
 
-    // Remove any existing commas and parse the value as a number
-    var number = parseFloat(inputElement.value.replace(/,/g, ''));
+      // Calcular el monto final
+      var montoFinal = montoAInvertir + totalRetornos;
 
-    // Check if the input is a valid number
-    if (!isNaN(number)) {
-      // Format the number with thousand commas
-      var formattedNumber = number.toLocaleString();
+      // Calcular la retención
+      var retencion = (montoFinal - calculodelUMA) * retencionDecimal / 360 * plazo;
 
-      // Update the input value with the formatted number
-      inputElement.value = formattedNumber;
-      x = number;
+      return retencion;
     }
 
-    var resultado = "0";
+    function actualizarValores(radioButton) {
+      var yElement = document.getElementById("y");
+      var zElement = document.getElementById("z");
 
+      switch (radioButton.value) {
+        case "opcion1":
+          yElement.textContent = "11.2";
+          zElement.textContent = "30";
+          break;
+        case "opcion2":
+          yElement.textContent = "11.5";
+          zElement.textContent = "28";
+          break;
+        case "opcion3":
+          yElement.textContent = "12";
+          zElement.textContent = "91";
+          break;
+        case "opcion4":
+          yElement.textContent = "12.50";
+          zElement.textContent = "182";
+          break;
+        case "opcion5":
+          yElement.textContent = "13";
+          zElement.textContent = "364";
+          break;
+        case "opcion6":
+          yElement.textContent = "13.50";
+          zElement.textContent = "364";
+          break;
+        default:
+          yElement.textContent = "11.1";
+          zElement.textContent = "30";
+      }
 
-    if (x && x >= 0 && !isNaN(x)) {
-      var resultado = ((x * y) / 364) * z;
-      // Redondear el resultado a dos decimales
-      resultado = (resultado / 100).toFixed(100);
+      calcular(radioButton.value); // Calcular automáticamente al cambiar la opción seleccionada
 
-      document.getElementById("resultado").textContent = resultado;
-
-      const amount = x;
-      calcularResultado(radioButtonOption, amount); // Llamar a la función calcularResultado para calcular los resultados adicionales
-    } else {
-      document.getElementById("resultado").textContent = "$0";
+      // Calcular la retención
+      calcularRetencion(parseInt(zElement.textContent));
     }
 
-  }
+    // Función para incrementar el valor del input en mil unidades
+    function incrementarMonto() {
+      var input = document.getElementById('x');
+      var valorActual = parseInt(input.value.replace(/\D/g, ''));
 
+      var nuevoValor = valorActual + 1000;
+      if (nuevoValor <= 10000000) {
+        input.value = nuevoValor;
+      } else {
+        input.value = 10000000;
+      }
 
-
-
-  let inversiones = [];
-  let retornos = [];
-
-
-
-  function calcularResultado(radioButtonOption, amount) {
-    const resultadoOriginal = parseFloat(
-      document.getElementById("resultado").textContent
-    );
-    const repeticiones = parseInt(
-      document.getElementById("repeticiones").value
-    );
-    const title = document.getElementById("title");
-    const listaResultados = document.getElementById("listaResultados");
-    // const x = parseFloat(document.getElementById("x").value);
-    const x = amount;
-
-    let repeticionesMultiplicadas = 0;
-    let trimestral = false;
-    let semestre = false;
-    let anual = false;
-
-    // Calcular repeticionesMultiplicadas en función de las opciones seleccionadas
-    // var checkboxes = document.getElementsByName("opcion");
-    // var radioButtons = document.getElementsByName("opcionGroup");
-
-    switch (radioButtonOption) {
-      case "opcion1":
-        repeticionesMultiplicadas = repeticiones;
-        title.innerHTML = "Meses a invertir";
-        break;
-      case "opcion2":
-        repeticionesMultiplicadas = repeticiones;
-        title.innerHTML = "Meses a invertir";
-        break;
-      case "opcion3":
-        repeticionesMultiplicadas = repeticiones * 3;
-        title.innerHTML = "Trimestres a invertir";
-        trimestral = true;
-        break;
-      case "opcion4":
-        repeticionesMultiplicadas = repeticiones * 6;
-        title.innerHTML = "Semestres a invertir";
-        semestre = true;
-        break;
-
-      case "opcion5":
-        repeticionesMultiplicadas = repeticiones * 12;
-        title.innerHTML = "Años a invertir";
-        anual = true;
-        break;
-      case "opcion6":
-        repeticionesMultiplicadas = repeticiones * 12;
-        title.innerHTML = "Años a invertir";
-        anual = true;
-        break;
-      default:
-        // No debería llegar aquí
-        break;
+      calcular();
+      calcularRetencion(parseInt(document.getElementById('z').textContent));
     }
 
 
-    // Limpiamos cualquier contenido previo en la lista de resultados
-    listaResultados.innerHTML = "";
+    // Función para decrementar el valor del input en mil unidades
+    function decrementarMonto() {
+      var input = document.getElementById('x');
+      var valorActual = parseInt(input.value.replace(/\D/g, ''));
 
-    let resultadoFinal = 0;
-    inversiones = [];
-    retornos = [];
-    const monto = parseFloat(document.getElementById("x").value);
+      input.value = Math.max(valorActual - 1000, 0);
+      calcular();
+      calcularRetencion(parseInt(document.getElementById('z').textContent));
+    }
 
-    for (let i = 0; i < repeticionesMultiplicadas; i++) {
-      let resultado = resultadoOriginal * Math.pow(1 + 0.01, i);
-      resultadoFinal += resultado;
+    // Función para incrementar el valor de las repeticiones en una unidad
+    function incrementarRepeticiones() {
+      var input = document.getElementById('repeticiones');
+      var valorActual = parseInt(input.value.replace(/\D/g, ''));
 
-      const inversion = resultadoFinal.toFixed(2);
+      if (input.value < 12) {
+        input.value = (valorActual + 1);
+      }
 
-      resultadoFormateado = resultado.toLocaleString("es-MX", {
+      calcular();
+
+      calcularRetencion(parseInt(document.getElementById('z').textContent));
+    }
+
+    // Función para decremantar el valor de las repeticiones en una unidad
+    function decrementarRepeticiones() {
+      var input = document.getElementById('repeticiones');
+      var valorActual = parseInt(input.value.replace(/\D/g, ''));
+
+      if (input.value > 1) {
+        input.value = (valorActual - 1);
+      }
+
+      calcular();
+
+      calcularRetencion(parseInt(document.getElementById('z').textContent));
+    }
+
+    function validar(value, event) {
+      if (parseInt(value) > 12 || value.length > 2) {
+        event.preventDefault();
+        const repeticiones = document.getElementById("repeticiones");
+        repeticiones.value = 1;
+        return;
+      }
+      return calcular();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const repeticionesInput = document.getElementById("repeticiones");
+      const monthsInput = document.getElementById("months");
+
+      repeticionesInput.value = 2;
+      monthsInput.value = 2;
+
+      // Actualiza la barra de progreso
+      const progress = document.querySelector('.progress');
+      var value = Math.floor((monthsInput.value / 12) * 100) - 4;
+      progress.style.background = `linear-gradient(to right, #000 0%, #000 ${value}%, #DEDEDE ${value}%, #DEDEDE 100%)`;
+    });
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var radioButtons = document.getElementsByName("opcionGroup");
+      var radioButtonValue;
+      for (var i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked) {
+          radioButtonValue = radioButtons[i].value;
+          break;
+        }
+      }
+      actualizarValores(document.querySelector('input[name="opcionGroup"]:checked'));
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const repeticionesInput = document.getElementById("repeticiones");
+      repeticionesInput.value = 2;
+      validar(2, null);
+    });
+
+
+    function calcular(radioButtonOption) {
+      if (radioButtonOption === undefined) {
+        var radioButtons = document.getElementsByName("opcionGroup");
+        for (var i = 0; i < radioButtons.length; i++) {
+          if (radioButtons[i].checked) {
+            radioButtonOption = radioButtons[i].value;
+          }
+        }
+      }
+
+      // var x = parseFloat(document.getElementById("x").value);
+      var y = parseFloat(document.getElementById("y").textContent);
+      var z = parseFloat(document.getElementById("z").textContent);
+
+
+      var inputElement = document.getElementById("x");
+
+      // Remove any existing commas and parse the value as a number
+      var number = parseFloat(inputElement.value.replace(/,/g, ''));
+
+      // Check if the input is a valid number
+      if (!isNaN(number)) {
+        // Format the number with thousand commas
+        var formattedNumber = number.toLocaleString();
+
+        // Update the input value with the formatted number
+        inputElement.value = formattedNumber;
+        x = number;
+      }
+
+      var resultado = "0";
+
+
+      if (x && x >= 0 && !isNaN(x)) {
+        var resultado = ((x * y) / 364) * z;
+        // Redondear el resultado a dos decimales
+        resultado = (resultado / 100).toFixed(100);
+
+        document.getElementById("resultado").textContent = resultado;
+
+        const amount = x;
+        calcularResultado(radioButtonOption, amount); // Llamar a la función calcularResultado para calcular los resultados adicionales
+      } else {
+        document.getElementById("resultado").textContent = "$0";
+      }
+
+    }
+
+
+
+
+    let inversiones = [];
+    let retornos = [];
+
+
+
+    function calcularResultado(radioButtonOption, amount) {
+      const resultadoOriginal = parseFloat(
+        document.getElementById("resultado").textContent
+      );
+      const repeticiones = parseInt(
+        document.getElementById("repeticiones").value
+      );
+      const title = document.getElementById("title");
+      const termToInvest = document.getElementById("termToInvest");
+      const termDisclaimer = document.getElementById("termDisclaimer");
+      const listaResultados = document.getElementById("listaResultados");
+      // const x = parseFloat(document.getElementById("x").value);
+      const x = amount;
+
+      let repeticionesMultiplicadas = 0;
+      let trimestral = false;
+      let semestre = false;
+      let anual = false;
+
+      // Calcular repeticionesMultiplicadas en función de las opciones seleccionadas
+      // var checkboxes = document.getElementsByName("opcion");
+      // var radioButtons = document.getElementsByName("opcionGroup");
+
+      switch (radioButtonOption) {
+        case "opcion1":
+          repeticionesMultiplicadas = repeticiones;
+          title.innerHTML = "Meses a invertir";
+          termToInvest.innerHTML = "meses";
+          termDisclaimer.innerHTML = "meses";
+          break;
+        case "opcion2":
+          repeticionesMultiplicadas = repeticiones;
+          title.innerHTML = "Meses a invertir";
+          termToInvest.innerHTML = "meses";
+          termDisclaimer.innerHTML = "meses";
+          break;
+        case "opcion3":
+          repeticionesMultiplicadas = repeticiones * 3;
+          title.innerHTML = "Trimestres a invertir";
+          termToInvest.innerHTML = "trimestres";
+          termDisclaimer.innerHTML = "trimestres";
+          trimestral = true;
+          break;
+        case "opcion4":
+          repeticionesMultiplicadas = repeticiones * 6;
+          title.innerHTML = "Semestres a invertir";
+          termToInvest.innerHTML = "semestres";
+          termDisclaimer.innerHTML = "semestres";
+          semestre = true;
+          break;
+
+        case "opcion5":
+          repeticionesMultiplicadas = repeticiones * 12;
+          title.innerHTML = "Años a invertir";
+          termToInvest.innerHTML = "años";
+          termDisclaimer.innerHTML = "años";
+          anual = true;
+          break;
+        case "opcion6":
+          repeticionesMultiplicadas = repeticiones * 12;
+          title.innerHTML = "Años a invertir";
+          termToInvest.innerHTML = "años";
+          termDisclaimer.innerHTML = "años";
+          anual = true;
+          break;
+        default:
+          // No debería llegar aquí
+          break;
+      }
+
+
+      // Limpiamos cualquier contenido previo en la lista de resultados
+      listaResultados.innerHTML = "";
+
+      let resultadoFinal = 0;
+      inversiones = [];
+      retornos = [];
+      const monto = parseFloat(document.getElementById("x").value);
+
+      for (let i = 0; i < repeticionesMultiplicadas; i++) {
+        let resultado = resultadoOriginal * Math.pow(1 + 0.01, i);
+        resultadoFinal += resultado;
+
+        const inversion = resultadoFinal.toFixed(2);
+
+        resultadoFormateado = resultado.toLocaleString("es-MX", {
+          style: "currency",
+          currency: "MXN",
+        });
+
+        // Creamos un nuevo elemento de lista y lo agregamos a la lista de resultados
+        const listItem = document.createElement("li");
+        listItem.textContent = `Repeticion ${i + 1}: ${resultadoFormateado}`;
+        listaResultados.appendChild(listItem);
+        retornos.push(+resultado.toFixed(2));
+        inversiones.push(inversion);
+        if (trimestral) {
+          i += 2;
+        }
+        if (semestre) {
+          i += 5;
+        }
+        if (anual) {
+          i += 11;
+        }
+      }
+
+      const labelsQuantity = retornos.length;
+      const labels = [];
+      for (let i = 0; i < labelsQuantity; i++) {
+        labels.push(String(i + 1));
+      }
+
+      // Actualiza los datos en el gráfico
+      dataQualitySmall.data.datasets[0].data = inversiones;
+      dataQualitySmall.data.datasets[1].data = retornos;
+      dataQualitySmall.data.labels = labels;
+
+      // Actualiza el gráfico
+      dataQualitySmall.update();
+      // Sumamos el valor de X al resultado final
+      resultadoFinal += x;
+
+      resultadoFinal = resultadoFinal.toLocaleString("es-MX", {
         style: "currency",
         currency: "MXN",
       });
 
-      // Creamos un nuevo elemento de lista y lo agregamos a la lista de resultados
-      const listItem = document.createElement("li");
-      listItem.textContent = `Repeticion ${i + 1}: ${resultadoFormateado}`;
-      listaResultados.appendChild(listItem);
-      retornos.push(+resultado.toFixed(2));
-      inversiones.push(inversion);
-      if (trimestral) {
-        i += 2;
-      }
-      if (semestre) {
-        i += 5;
-      }
-      if (anual) {
-        i += 11;
-      }
+      // Mostrar el resultado final en el primer párrafo
+      document.getElementById("resultado").textContent = resultadoFinal;
     }
 
-    const labelsQuantity = retornos.length;
-    const labels = [];
-    for (let i = 0; i < labelsQuantity; i++) {
-      labels.push(String(i + 1));
-    }
+    var ctx = document.getElementById("myChart");
+
+
+
+
+
+
+
+    var dataQualitySmall = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+        ],
+        datasets: [
+          {
+            label: "Capital",
+            stack: "Stack 0",
+            data: inversiones,
+            backgroundColor: "#2437F5",
+            borderColor: "#2437F5",
+            borderWidth: 1,
+          },
+          {
+            label: "Rendimiento",
+            stack: "Stack 0",
+            data: retornos,
+            backgroundColor: "#8590F9",
+            borderColor: "#8590F9",
+            borderWidth: 4,
+          },
+        ],
+      },
+      options: {
+        tooltips: {
+          borderColor: "#DEDEDE",
+          borderWidth: 1,
+          backgroundColor: "#F8F8F8",
+          bodyFontColor: "#000",
+          titleFontColor: "#000",
+          width: 20,
+
+          /*
+          callbacks: {
+            label: function(tooltipItem, data) {
+                const datasetIndex = tooltipItem.datasetIndex;
+                const index = tooltipItem.index;
+                const inversion = data.datasets[1].data[index];
+                const retorno = data.datasets[0].data[index];
+  
+          return `Inversión: $${inversion},Retorno: $${retorno}`;
+          }
+        },
+  */
+        },
+
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              callback: function (value, index, values) {
+                if (parseInt(value) >= 1000) {
+                  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                } else {
+                  return value;
+                }
+              }
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              display: false
+            }
+          }]
+        },
+        indexAxis: "y",
+        plugins: {
+          legend: {
+            display: true,
+            position: "right",
+          },
+        },
+      },
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Actualiza los datos en el gráfico
-    dataQualitySmall.data.datasets[0].data = inversiones;
-    dataQualitySmall.data.datasets[1].data = retornos;
-    dataQualitySmall.data.labels = labels;
 
     // Actualiza el gráfico
     dataQualitySmall.update();
-    // Sumamos el valor de X al resultado final
-    resultadoFinal += x;
 
-    resultadoFinal = resultadoFinal.toLocaleString("es-MX", {
-      style: "currency",
-      currency: "MXN",
-    });
+    $(function () {
+      let idOfSlider = "slider-single";
+      let idOfSliderInput = "x";
 
-    // Mostrar el resultado final en el primer párrafo
-    document.getElementById("resultado").textContent = resultadoFinal;
-  }
+      $("#" + idOfSlider).css("display", "none");
+      $("<div></div>").insertAfter("#" + idOfSlider);
 
-  var ctx = document.getElementById("myChart");
-
-
-
-
-
-
-
-  var dataQualitySmall = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
-      ],
-      datasets: [
-        {
-          label: "Inversion",
-          stack: "Stack 0",
-          data: inversiones,
-          backgroundColor: "#2437F5",
-          borderColor: "#2437F5",
-          borderWidth: 1,
+      var single = $("#" + idOfSlider).next()[0];
+      noUiSlider.create(single, {
+        start: [0],
+        range: {
+          min: 0,
+          max: 5000000,
         },
-        {
-          label: "Retorno",
-          stack: "Stack 0",
-          data: retornos,
-          backgroundColor: "#8590F9",
-          borderColor: "#8590F9",
-          borderWidth: 4,
+        step: 100,
+      });
+
+      var valueSingleInput = $("#" + idOfSliderInput);
+
+      single.noUiSlider.on("update", function (values) {
+        valueSingleInput.val(values[0]);
+      });
+
+      valueSingleInput.on("change", function () {
+        single.noUiSlider.set([parseFloat(valueSingleInput.val())]);
+      });
+    });
+
+    $(function () {
+      let idOfSlider = "slider-single-2";
+      let idOfSliderInput = "repeticiones";
+
+      $("#" + idOfSlider).css("display", "none");
+      $("<div></div>").insertAfter("#" + idOfSlider);
+
+      var single = $("#" + idOfSlider).next()[0];
+      noUiSlider.create(single, {
+        start: [0],
+        range: {
+          min: 0,
+          max: 100,
         },
-      ],
-    },
-    options: {
-      tooltips: {
-        borderColor: "#DEDEDE",
-        borderWidth: 1,
-        backgroundColor: "#F8F8F8",
-        bodyFontColor: "#000",
-        titleFontColor: "#000",
-        width: 20,
+        step: 1,
+        tooltips: [wNumb({ decimals: 0, prefix: "" })],
+      });
 
-        /*
-        callbacks: {
-          label: function(tooltipItem, data) {
-              const datasetIndex = tooltipItem.datasetIndex;
-              const index = tooltipItem.index;
-              const inversion = data.datasets[1].data[index];
-              const retorno = data.datasets[0].data[index];
+      var valueSingleInput = $("#" + idOfSliderInput);
 
-        return `Inversión: $${inversion},Retorno: $${retorno}`;
-        }
-      },
-*/
-      },
+      single.noUiSlider.on("update", function (values) {
+        valueSingleInput.val(values[0]);
+      });
 
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-            callback: function (value, index, values) {
-              if (parseInt(value) >= 1000) {
-                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              } else {
-                return value;
-              }
-            }
-          }
-        }]
-      },
-      indexAxis: "y",
-      plugins: {
-        legend: {
-          display: true,
-          position: "right",
-        },
-      },
-    },
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Actualiza los datos en el gráfico
-
-  // Actualiza el gráfico
-  dataQualitySmall.update();
-
-  $(function () {
-    let idOfSlider = "slider-single";
-    let idOfSliderInput = "x";
-
-    $("#" + idOfSlider).css("display", "none");
-    $("<div></div>").insertAfter("#" + idOfSlider);
-
-    var single = $("#" + idOfSlider).next()[0];
-    noUiSlider.create(single, {
-      start: [0],
-      range: {
-        min: 0,
-        max: 5000000,
-      },
-      step: 100,
+      valueSingleInput.on("change", function () {
+        single.noUiSlider.set([parseFloat(valueSingleInput.val())]);
+      });
     });
 
-    var valueSingleInput = $("#" + idOfSliderInput);
+    function validarNumero(input) {
+      input.value = input.value.replace(/\D/g, ''); // Remueve todos los caracteres que no sean dígitos
 
-    single.noUiSlider.on("update", function (values) {
-      valueSingleInput.val(values[0]);
-    });
+      // Verificar si el valor es mayor a 10,000,000
+      if (parseInt(input.value) > 10000000) {
+        // Si es mayor, establecer el valor máximo permitido
+        input.value = "10000000";
+      }
 
-    valueSingleInput.on("change", function () {
-      single.noUiSlider.set([parseFloat(valueSingleInput.val())]);
-    });
-  });
-
-  $(function () {
-    let idOfSlider = "slider-single-2";
-    let idOfSliderInput = "repeticiones";
-
-    $("#" + idOfSlider).css("display", "none");
-    $("<div></div>").insertAfter("#" + idOfSlider);
-
-    var single = $("#" + idOfSlider).next()[0];
-    noUiSlider.create(single, {
-      start: [0],
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1,
-      tooltips: [wNumb({ decimals: 0, prefix: "" })],
-    });
-
-    var valueSingleInput = $("#" + idOfSliderInput);
-
-    single.noUiSlider.on("update", function (values) {
-      valueSingleInput.val(values[0]);
-    });
-
-    valueSingleInput.on("change", function () {
-      single.noUiSlider.set([parseFloat(valueSingleInput.val())]);
-    });
-  });
-
-  function validarNumero(input) {
-    input.value = input.value.replace(/\D/g, ''); // Remueve todos los caracteres que no sean dígitos
-  }
-
-
-</script>
-
-
-
-<script>
-  const value = document.querySelector("#repeticiones");
-  const input = document.querySelector("#months");
-  value.value = input.value;
-  input.addEventListener("input", (event) => {
-    value.value = event.target.value;
-  });
-  value.addEventListener("input", (event) => {
-    if (event.target.value > 12) {
-      event.target.value = 1;
+      // Si el valor del input está vacío, mostrar "0"
+      if (input.value === '') {
+        input.value = "0";
+      }
     }
 
-    input.value = event.target.value;
-    calcular();
-  });
 
-  const progress = document.querySelector('.progress');
+  </script>
 
-  progress.addEventListener('input', function () {
-    var value = Math.floor((this.value / 12) * 100) - 4;
-    this.style.background = `linear-gradient(to right, #000 0%, #000 ${value}%, #DEDEDE ${value}%, #DEDEDE 100%)`
-  });
-</script>
+
+
+  <script>
+    const value = document.querySelector("#repeticiones");
+    const input = document.querySelector("#months");
+    value.value = input.value;
+    input.addEventListener("input", (event) => {
+      value.value = event.target.value;
+    });
+    value.addEventListener("input", (event) => {
+      if (event.target.value > 12) {
+        event.target.value = 1;
+      }
+
+      input.value = event.target.value;
+      calcular();
+    });
+
+    const progress = document.querySelector('.progress');
+
+    progress.addEventListener('input', function () {
+      var value = Math.floor((this.value / 12) * 100) - 4;
+      this.style.background = `linear-gradient(to right, #000 0%, #000 ${value}%, #DEDEDE ${value}%, #DEDEDE 100%)`
+    });
+  </script>
 
 </body>
 
