@@ -901,6 +901,10 @@
       if (!isNaN(number)) {
         var formattedNumber = number.toLocaleString("es-ES");
 
+        if (number < 10000) {
+          var formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
         // Update the input value with the formatted number
         inputElement.value = formattedNumber;
         x = number;
