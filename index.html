@@ -706,8 +706,10 @@
       // Sumar las retenciones de las duraciones anteriores a la duración seleccionada
       var retencionTotal = retencionesDuraciones.slice(0, duracionSeleccionada).reduce((a, b) => a + b, 0);
 
-      // Mostrar el resultado en el DOM
-      document.getElementById("retenciones").textContent = '$' + retencionTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      // Mostrar el resultado en el DOM con el formato deseado
+      document.getElementById("retenciones").textContent = '$' + formatearNumero(retencionTotal);
+
+      calcular();
     }
 
     function calcularRetencionIndividual(montoAInvertir, duracion, plazo) {
@@ -893,12 +895,11 @@
       var inputElement = document.getElementById("x");
 
       // Remove any existing commas and parse the value as a number
-      var number = parseFloat(inputElement.value.replace(/,/g, ''));
+      var number = parseFloat(inputElement.value.replace(/\./g, '').replace(',', '.'));
 
       // Check if the input is a valid number
       if (!isNaN(number)) {
-        // Format the number with thousand commas
-        var formattedNumber = number.toLocaleString();
+        var formattedNumber = number.toLocaleString("es-ES");
 
         // Update the input value with the formatted number
         inputElement.value = formattedNumber;
@@ -1016,10 +1017,7 @@
 
         const inversion = resultadoFinal.toFixed(2);
 
-        resultadoFormateado = resultado.toLocaleString("es-MX", {
-          style: "currency",
-          currency: "MXN",
-        });
+        resultadoFormateado = resultado.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
         // Creamos un nuevo elemento de lista y lo agregamos a la lista de resultados
         const listItem = document.createElement("li");
@@ -1054,13 +1052,13 @@
       // Sumamos el valor de X al resultado final
       resultadoFinal += x;
 
-      resultadoFinal = resultadoFinal.toLocaleString("es-MX", {
-        style: "currency",
-        currency: "MXN",
-      });
+      const retenciones = parseFloat(document.getElementById("retenciones").textContent.replace('$', '').replace(',', '.'));
+
+      // Restar retenciones al resultadoFinal
+      resultadoFinal -= retenciones;
 
       // Mostrar el resultado final en el primer párrafo
-      document.getElementById("resultado").textContent = resultadoFinal;
+      document.getElementById("resultado").textContent = "$" + formatearNumero(resultadoFinal);
     }
 
     var ctx = document.getElementById("myChart");
@@ -1263,6 +1261,19 @@
       if (input.value === '') {
         input.value = "0";
       }
+    }
+
+    function formatearNumero(numero) {
+      // Convertir el número a string con 2 decimales
+      var numeroString = numero.toFixed(2);
+
+      // Reemplazar el punto por la coma para los decimales
+      numeroString = numeroString.replace('.', ',');
+
+      // Agregar punto como separador de miles
+      numeroString = numeroString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+      return numeroString;
     }
 
 
