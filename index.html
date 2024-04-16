@@ -551,7 +551,7 @@
             </div>
           </div>
 
-          <p class="disclaimer">Hasta $10.000.000 MXN</p>
+          <p class="disclaimer">Hasta $10,000,000 MXN</p>
         </div>
 
         <div class="line">
@@ -707,7 +707,7 @@
       var retencionTotal = retencionesDuraciones.slice(0, duracionSeleccionada).reduce((a, b) => a + b, 0);
 
       // Mostrar el resultado en el DOM con el formato deseado
-      document.getElementById("retenciones").textContent = '$' + formatearNumero(retencionTotal);
+      document.getElementById("retenciones").textContent = '$' + formatNumber(retencionTotal);
 
       calcular();
     }
@@ -894,16 +894,12 @@
 
       var inputElement = document.getElementById("x");
 
-      // Remove any existing commas and parse the value as a number
-      var number = parseFloat(inputElement.value.replace(/\./g, '').replace(',', '.'));
+      // Remove any non-numeric characters and parse the resulting value as an integer
+      var number = parseInt(inputElement.value.replace(/\D/g, ''));
 
       // Check if the input is a valid number
       if (!isNaN(number)) {
-        var formattedNumber = number.toLocaleString("es-ES");
-
-        if (number < 10000) {
-          var formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+        var formattedNumber = number.toLocaleString("es-US");
 
         // Update the input value with the formatted number
         inputElement.value = formattedNumber;
@@ -1021,7 +1017,7 @@
 
         const inversion = resultadoFinal.toFixed(2);
 
-        resultadoFormateado = resultado.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        resultadoFormateado = resultado.toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
         // Creamos un nuevo elemento de lista y lo agregamos a la lista de resultados
         const listItem = document.createElement("li");
@@ -1062,7 +1058,7 @@
       resultadoFinal -= retenciones;
 
       // Mostrar el resultado final en el primer párrafo
-      document.getElementById("resultado").textContent = "$" + formatearNumero(resultadoFinal);
+      document.getElementById("resultado").textContent = "$" + formatNumber(resultadoFinal);
     }
 
     var ctx = document.getElementById("myChart");
@@ -1267,17 +1263,23 @@
       }
     }
 
-    function formatearNumero(numero) {
-      // Convertir el número a string con 2 decimales
-      var numeroString = numero.toFixed(2);
+    function formatNumber(number) {
+      // Convert the number to a string with 2 decimal places
+      var numberString = number.toFixed(2);
 
-      // Reemplazar el punto por la coma para los decimales
-      numeroString = numeroString.replace('.', ',');
+      // Replace the dot with a comma for decimals
+      numberString = numberString.replace('.', ',');
 
-      // Agregar punto como separador de miles
-      numeroString = numeroString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      // Split into integer and decimal parts
+      var parts = numberString.split(',');
+      var integerPart = parts[0];
+      var decimalPart = parts[1];
 
-      return numeroString;
+      // Replace comma with dot for thousands
+      integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      // Concatenate integer and decimal parts with the new format
+      return integerPart + '.' + decimalPart;
     }
 
 
