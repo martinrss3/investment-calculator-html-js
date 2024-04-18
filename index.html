@@ -666,7 +666,7 @@
   <script src="https://refreshless.com/nouislider/dist/nouislider.js?v=1550"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script src="https://refreshless.com/nouislider/documentation/assets/wNumb.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
 
 
   <script>
@@ -887,7 +887,6 @@
         }
       }
 
-      // var x = parseFloat(document.getElementById("x").value);
       var y = parseFloat(document.getElementById("y").textContent);
       var z = parseFloat(document.getElementById("z").textContent);
 
@@ -922,6 +921,7 @@
         document.getElementById("resultado").textContent = "$0";
       }
 
+      /* actualizarInversionArray(); */
     }
 
 
@@ -943,17 +943,12 @@
       const termToInvest = document.getElementById("termToInvest");
       const termDisclaimer = document.getElementById("termDisclaimer");
       const listaResultados = document.getElementById("listaResultados");
-      // const x = parseFloat(document.getElementById("x").value);
       const x = amount;
 
       let repeticionesMultiplicadas = 0;
       let trimestral = false;
       let semestre = false;
       let anual = false;
-
-      // Calcular repeticionesMultiplicadas en función de las opciones seleccionadas
-      // var checkboxes = document.getElementsByName("opcion");
-      // var radioButtons = document.getElementsByName("opcionGroup");
 
       switch (radioButtonOption) {
         case "opcion1":
@@ -1042,9 +1037,33 @@
         labels.push(String(i + 1));
       }
 
+      // Obtener el valor particular a sumar
+      let montoAInvertir = parseFloat(document.getElementById("x").value.replace(/\D/g, ''));
+
+      // Inicializar el array para almacenar las sumas
+      let sumaDeCapitales = [];
+
+      // Sumar el valor particular al primer elemento del array sumaDeCapitales
+      sumaDeCapitales.push(montoAInvertir.toFixed(2));
+
+      // Iterar sobre el array inversiones y realizar la suma acumulativa
+      for (let i = 1; i < inversiones.length; i++) {
+        // Convertir el elemento actual del array inversiones a un número
+        let inversionNumerica = parseFloat(inversiones[i - 1]);
+
+        // Realizar la suma acumulativa sumando el elemento actual de inversiones al valor previamente calculado
+        let resultadoParcial = inversionNumerica + montoAInvertir;
+
+        // Formatear el resultado parcial al mismo formato que el elemento original
+        let resultadoFormateado = resultadoParcial.toFixed(2); // Formato con dos decimales, por ejemplo
+
+        // Agregar el resultado al array sumaDeCapitales
+        sumaDeCapitales.push(resultadoFormateado);
+      }
+
       // Actualiza los datos en el gráfico
-      dataQualitySmall.data.datasets[0].data = inversiones;
-      dataQualitySmall.data.datasets[1].data = retornos;
+      dataQualitySmall.data.datasets[1].data = sumaDeCapitales;
+      dataQualitySmall.data.datasets[0].data = retornos;
       dataQualitySmall.data.labels = labels;
 
       // Actualiza el gráfico
@@ -1061,51 +1080,47 @@
       document.getElementById("resultado").textContent = "$" + formatNumber(resultadoFinal);
     }
 
-    var ctx = document.getElementById("myChart");
-
-
-
-
-
-
-
+    var canvas = document.getElementById("myChart");
+    var ctx = canvas.getContext('2d');
     var dataQualitySmall = new Chart(ctx, {
       type: "bar",
       data: {
         labels: [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
+          "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
         ],
-        datasets: [
-          {
-            label: "Capital",
-            stack: "Stack 0",
-            data: inversiones,
-            backgroundColor: "#2437F5",
-            borderColor: "#2437F5",
-            borderWidth: 1,
-          },
-          {
-            label: "Rendimiento",
-            stack: "Stack 0",
-            data: retornos,
-            backgroundColor: "#8590F9",
-            borderColor: "#8590F9",
-            borderWidth: 4,
-          },
-        ],
+        datasets: [{
+          label: "Rendimiento",
+          yAxisID: 'y-axis-2', // Asigna este dataset al primer eje Y
+          type: "line",
+          data: inversiones,
+          backgroundColor: "transparent",
+          borderColor: "#8590F9",
+          borderWidth: 4,
+        }, {
+          label: "Capital",
+          yAxisID: 'y-axis-1', // Asigna este dataset al segundo eje Y
+          type: "bar",
+          data: retornos,
+          backgroundColor: "#2437F5",
+          borderColor: "#2437F5",
+          borderWidth: 1,
+        }],
       },
       options: {
+        scales: {
+          yAxes: [{
+            id: 'y-axis-1',
+            type: 'linear',
+            position: 'left', // Coloca este eje a la izquierda
+            ticks: {
+              beginAtZero: true
+            }
+          }, {
+            id: 'y-axis-2',
+            type: 'linear',
+            position: 'right', // Coloca este eje a la derecha
+          }]
+        },
         tooltips: {
           borderColor: "#DEDEDE",
           borderWidth: 1,
@@ -1113,50 +1128,9 @@
           bodyFontColor: "#000",
           titleFontColor: "#000",
           width: 20,
-
-          /*
-          callbacks: {
-            label: function(tooltipItem, data) {
-                const datasetIndex = tooltipItem.datasetIndex;
-                const index = tooltipItem.index;
-                const inversion = data.datasets[1].data[index];
-                const retorno = data.datasets[0].data[index];
-  
-          return `Inversión: $${inversion},Retorno: $${retorno}`;
-          }
-        },
-  */
-        },
-
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              callback: function (value, index, values) {
-                if (parseInt(value) >= 1000) {
-                  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                } else {
-                  return value;
-                }
-              }
-            }
-          }],
-          xAxes: [{
-            gridLines: {
-              display: false
-            }
-          }]
-        },
-        indexAxis: "y",
-        plugins: {
-          legend: {
-            display: true,
-            position: "right",
-          },
         },
       },
     });
-
 
 
 
