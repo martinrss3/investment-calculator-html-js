@@ -540,7 +540,7 @@
             <div>
               <span>$</span>
               <input id="x" name="monto" class="amount" value="10000" required
-                oninput="validarNumero(this), calcular(), calcularRetencion(parseInt(document.getElementById('z').textContent))" />
+                oninput="validarNumero(this), calcular()" />
               <span class="currency">MXN</span>
             </div>
 
@@ -592,7 +592,7 @@
         </div>
 
         <div style="display: none;">
-          <p>Tasa: <span id="y">11.2</span></p>
+          <p>Tasa: <span id="y">11.1</span></p>
           <p>Duración: <span id="z">30</span></p>
         </div>
 
@@ -601,9 +601,8 @@
 
           <div class="repeticionesInputWrapper">
             <div>
-              <input type="number" id="repeticiones"
-                onkeyup="validar(this.value, event), calcularRetencion(parseInt(document.getElementById('z').textContent))"
-                min="1" max="12" pattern="[1-9]|1[0-2]" class="repeticiones" />
+              <input type="number" id="repeticiones" onkeyup="validar(this.value, event)" min="1" max="12"
+                pattern="[1-9]|1[0-2]" class="repeticiones" />
               <span class="termToInvest" id="termToInvest">meses</span>
             </div>
 
@@ -616,8 +615,7 @@
           </div>
 
           <div style="display: none;" class="progressContainer">
-            <input type="range" class="progress" id="months" min="1" max="12" step="1"
-              onchange="calcular(), calcularRetencion(parseInt(document.getElementById('z').textContent))" />
+            <input type="range" class="progress" id="months" min="1" max="12" step="1" onchange="calcular()" />
           </div>
 
           <div style="display: none;" class="monthsContainer">
@@ -648,7 +646,7 @@
         <span class="retenciones" id="retenciones">$0</span>
       </div>
 
-      <ul id="listaResultados" style="display: none">
+      <ul id="listaResultados" style="display: none;">
         Los resultados calculados se agregarán aquí como elementos de lista
       </ul>
       <div class="graphicContainer">
@@ -656,7 +654,6 @@
       </div>
     </div>
   </div>
-
 
 
 
@@ -683,66 +680,13 @@
     // Calculo del UMA
     const calculodelUMA = UMA * 12 * 30.4 * 5;
 
-    function calcularRetencion(plazo) {
-      var montoAInvertir = parseFloat(document.getElementById("x").value.replace(/\D/g, ''));
-
-      // Array para almacenar las retenciones de todas las duraciones
-      var retencionesDuraciones = [];
-
-      // Iterar sobre todas las duraciones de 1 a 12
-      for (var i = 1; i <= 12; i++) {
-        var duracion = i; // Duración actual
-
-        // Calcular la retención para la duración actual
-        var retencion = calcularRetencionIndividual(montoAInvertir, duracion, plazo);
-
-        // Guardar la retención en el array
-        retencionesDuraciones.push(retencion);
-      }
-
-      // Obtener la duración seleccionada
-      var duracionSeleccionada = parseInt(document.getElementById('repeticiones').value);
-
-      // Sumar las retenciones de las duraciones anteriores a la duración seleccionada
-      var retencionTotal = retencionesDuraciones.slice(0, duracionSeleccionada).reduce((a, b) => a + b, 0);
-
-      // Mostrar el resultado en el DOM con el formato deseado
-      document.getElementById("retenciones").textContent = '$' + formatNumber(retencionTotal);
-
-      calcular();
-    }
-
-    function calcularRetencionIndividual(montoAInvertir, duracion, plazo) {
-      // Si el monto a invertir es menor o igual a 0 o menor al cálculo del UMA, la retención es 0
-      if (!montoAInvertir || montoAInvertir <= 0 || montoAInvertir < calculodelUMA) {
-        return 0;
-      }
-
-      // Si la duración es menor o igual a 2, retornosSumados será un array vacío
-      var retornosSumados = [];
-      if (duracion >= 2) {
-        retornosSumados = retornos.slice(0, duracion - 1);
-      }
-
-      // Sumar los elementos de la lista retornos a partir de la duración deseada
-      var totalRetornos = retornosSumados.reduce((a, b) => a + b, 0);
-
-      // Calcular el monto final
-      var montoFinal = montoAInvertir + totalRetornos;
-
-      // Calcular la retención
-      var retencion = (montoFinal - calculodelUMA) * retencionDecimal / 360 * plazo;
-
-      return retencion;
-    }
-
     function actualizarValores(radioButton) {
       var yElement = document.getElementById("y");
       var zElement = document.getElementById("z");
 
       switch (radioButton.value) {
         case "opcion1":
-          yElement.textContent = "11.2";
+          yElement.textContent = "11.1";
           zElement.textContent = "30";
           break;
         case "opcion2":
@@ -771,9 +715,6 @@
       }
 
       calcular(radioButton.value); // Calcular automáticamente al cambiar la opción seleccionada
-
-      // Calcular la retención
-      calcularRetencion(parseInt(zElement.textContent));
     }
 
     // Función para incrementar el valor del input en mil unidades
@@ -789,7 +730,6 @@
       }
 
       calcular();
-      calcularRetencion(parseInt(document.getElementById('z').textContent));
     }
 
 
@@ -800,7 +740,6 @@
 
       input.value = Math.max(valorActual - 1000, 0);
       calcular();
-      calcularRetencion(parseInt(document.getElementById('z').textContent));
     }
 
     // Función para incrementar el valor de las repeticiones en una unidad
@@ -813,8 +752,6 @@
       }
 
       calcular();
-
-      calcularRetencion(parseInt(document.getElementById('z').textContent));
     }
 
     // Función para decremantar el valor de las repeticiones en una unidad
@@ -827,8 +764,6 @@
       }
 
       calcular();
-
-      calcularRetencion(parseInt(document.getElementById('z').textContent));
     }
 
     function validar(value, event) {
@@ -909,7 +844,7 @@
 
 
       if (x && x >= 0 && !isNaN(x)) {
-        var resultado = ((x * y) / 364) * z;
+        var resultado = ((x * y) / 360) * z;
         // Redondear el resultado a dos decimales
         resultado = (resultado / 100).toFixed(100);
 
@@ -920,8 +855,6 @@
       } else {
         document.getElementById("resultado").textContent = "$0";
       }
-
-      /* actualizarInversionArray(); */
     }
 
 
@@ -977,7 +910,6 @@
           termDisclaimer.innerHTML = "semestres";
           semestre = true;
           break;
-
         case "opcion5":
           repeticionesMultiplicadas = repeticiones * 12;
           title.innerHTML = "Años a invertir";
@@ -997,29 +929,39 @@
           break;
       }
 
-
       // Limpiamos cualquier contenido previo en la lista de resultados
       listaResultados.innerHTML = "";
 
       let resultadoFinal = 0;
-      inversiones = [];
-      retornos = [];
-      const monto = parseFloat(document.getElementById("x").value);
+      let inversiones = [];
+      let retornos = [];
+      let retenciones = [];
+      let sumaRetenciones = 0;
+
+      let tasaInteres = parseFloat(document.getElementById("y").textContent) / 100; // Convertir a decimal
+      let plazo = parseInt(document.getElementById("z").textContent);
+      let montoInversion = parseFloat(document.getElementById("x").value.replace(/\D/g, ''));
 
       for (let i = 0; i < repeticionesMultiplicadas; i++) {
-        let resultado = resultadoOriginal * Math.pow(1 + 0.01, i);
-        resultadoFinal += resultado;
+        let rendimiento = montoInversion * (tasaInteres / 360 * plazo);
+        let resultado = montoInversion + rendimiento;
 
-        const inversion = resultadoFinal.toFixed(2);
+        const inversion = resultado.toFixed(2);
+        const rendimientoFormateado = rendimiento.toFixed(2);
 
-        resultadoFormateado = resultado.toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        // Actualizar monto de inversión para el próximo cálculo
+        montoInversion = resultado;
 
-        // Creamos un nuevo elemento de lista y lo agregamos a la lista de resultados
-        const listItem = document.createElement("li");
-        listItem.textContent = `Repeticion ${i + 1}: ${resultadoFormateado}`;
-        listaResultados.appendChild(listItem);
-        retornos.push(+resultado.toFixed(2));
+        // Agregar el resultado a la lista de retornos
+        retornos.push(+rendimientoFormateado);
         inversiones.push(inversion);
+
+        // Crear un nuevo elemento de lista y agregarlo a la lista de resultados
+        const listItem = document.createElement("li");
+        listItem.textContent = `Repeticion ${i + 1}: ${rendimientoFormateado}`;
+        listaResultados.appendChild(listItem);
+
+        // Incrementar el contador según el tipo de período (trimestral, semestral, anual)
         if (trimestral) {
           i += 2;
         }
@@ -1031,54 +973,95 @@
         }
       }
 
+      for (var i = 1; i <= repeticiones; i++) {
+        var duracion = i; // Duración actual
+        let rendimiento = montoInversion * (tasaInteres / 360 * plazo);
+        let resultado = montoInversion + rendimiento;
+
+        if (duracion === 1) {
+          montoInversion = parseFloat(document.getElementById("x").value.replace(/\D/g, ''));
+        } else {
+          montoInversion = resultado;
+        }
+
+        // Calcular la retención para la duración actual
+        var retencion = (parseFloat(montoInversion).toFixed(2) - calculodelUMA) * retencionDecimal / 360 * plazo;
+
+        if (retencion < 0) {
+          retencion = 0; // Asignar 0 si la retención es negativa
+        }
+
+        // Guardar la retención en el array
+        retenciones.push(parseFloat(retencion).toFixed(2));
+
+        // Sumar la retención actual a la suma total
+        sumaRetenciones += retencion;
+      }
+
+      // Mostrar el resultado en el elemento con el id "retenciones"
+      document.getElementById("retenciones").textContent = '$' + formatNumber(sumaRetenciones);
+
       const labelsQuantity = retornos.length;
       const labels = [];
       for (let i = 0; i < labelsQuantity; i++) {
-        labels.push(String(i + 1));
+        labels.push(String(i));
       }
 
       // Obtener el valor particular a sumar
       let montoAInvertir = parseFloat(document.getElementById("x").value.replace(/\D/g, ''));
 
-      // Inicializar el array para almacenar las sumas
-      let sumaDeCapitales = [];
+      let inversionesActualizado = inversiones.slice();
+      inversionesActualizado.unshift(montoAInvertir.toFixed(2));
 
-      // Sumar el valor particular al primer elemento del array sumaDeCapitales
-      sumaDeCapitales.push(montoAInvertir.toFixed(2));
+      let inversionesActualizadoLength = inversionesActualizado.length;
 
-      // Iterar sobre el array inversiones y realizar la suma acumulativa
-      for (let i = 1; i < inversiones.length; i++) {
-        // Convertir el elemento actual del array inversiones a un número
-        let inversionNumerica = parseFloat(inversiones[i - 1]);
+      let labelsForChart = [];
 
-        // Realizar la suma acumulativa sumando el elemento actual de inversiones al valor previamente calculado
-        let resultadoParcial = inversionNumerica + montoAInvertir;
+      for (let i = 0; i <= inversionesActualizadoLength - 1; i++) {
+        labelsForChart.push(i.toString());
+      }
 
-        // Formatear el resultado parcial al mismo formato que el elemento original
-        let resultadoFormateado = resultadoParcial.toFixed(2); // Formato con dos decimales, por ejemplo
+      let retornosForChart = retornos.slice();
+      retornosForChart.unshift(0);
 
-        // Agregar el resultado al array sumaDeCapitales
-        sumaDeCapitales.push(resultadoFormateado);
+      let retencionesForChart = retenciones.slice();
+      retencionesForChart.unshift("0.00");
+
+      let retencionesAplicadas = [];
+
+      let sumaAcumulativaRetenciones = 0;
+      let sumaAcumulativaRetencionesArray = retencionesForChart.map((valor) => {
+        sumaAcumulativaRetenciones += parseFloat(valor);
+        return sumaAcumulativaRetenciones;
+      });
+
+      for (let i = 0; i < inversionesActualizadoLength; i++) {
+        let inversionActualizada = parseFloat(inversionesActualizado[i]);
+        let retencion = parseFloat(sumaAcumulativaRetencionesArray[i]) || 0;
+        let nuevoValor = (inversionActualizada - retencion).toFixed(2);
+        retencionesAplicadas.push(nuevoValor);
       }
 
       // Actualiza los datos en el gráfico
-      dataQualitySmall.data.datasets[1].data = sumaDeCapitales;
-      dataQualitySmall.data.datasets[0].data = retornos;
-      dataQualitySmall.data.labels = labels;
+      dataQualitySmall.data.datasets[1].data = retencionesAplicadas;
+      dataQualitySmall.data.datasets[0].data = retornosForChart;
+      dataQualitySmall.data.labels = labelsForChart;
 
       // Actualiza el gráfico
       dataQualitySmall.update();
+
       // Sumamos el valor de X al resultado final
       resultadoFinal += x;
 
-      const retenciones = parseFloat(document.getElementById("retenciones").textContent.replace('$', '').replace(',', '.'));
+      // Obtener el último elemento del array 'inversiones' que contiene el monto final con los rendimientos sumados
+      const resultadoFinalConRendimientos = parseFloat(inversiones[inversiones.length - 1]);
 
-      // Restar retenciones al resultadoFinal
-      resultadoFinal -= retenciones;
+      const resultadoFinalConRetenciones = resultadoFinalConRendimientos - sumaRetenciones;
 
-      // Mostrar el resultado final en el primer párrafo
-      document.getElementById("resultado").textContent = "$" + formatNumber(resultadoFinal);
+      // Mostrar el resultado final con los rendimientos sumados en el elemento 'resultado'
+      document.getElementById("resultado").textContent = "$" + formatNumber(resultadoFinalConRetenciones);
     }
+
 
     var canvas = document.getElementById("myChart");
     var ctx = canvas.getContext('2d');
@@ -1096,6 +1079,7 @@
           backgroundColor: "transparent",
           borderColor: "#8590F9",
           borderWidth: 4,
+          lineTension: 0,
         }, {
           label: "Capital",
           yAxisID: 'y-axis-1', // Asigna este dataset al segundo eje Y
