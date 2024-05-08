@@ -1,0 +1,521 @@
+@font-face {
+  font-family: "Neptune";
+  src: url("Neptune-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Neptune";
+  src: url("Neptune-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "PPFragment";
+  src: url("PPFragment.ttf");
+}
+
+body {
+  font-family: "Neptune", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  color: #757575;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 100px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 50px;
+  }
+}
+
+.form {
+  display: flex;
+}
+
+.headTitle {
+  font-family: "PPFragment", sans-serif;
+  font-size: 56px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 61.6px;
+  margin-top: 103px;
+  margin-bottom: 32px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 32px;
+    line-height: 40px;
+    margin-top: unset;
+    margin-bottom: 20px;
+  }
+}
+
+.graphicContainer {
+  margin-top: 40px;
+
+  @media screen and (max-width: 640px) {
+    margin-top: 20px;
+  }
+}
+
+.graphic {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 347px;
+  border-radius: 0px 67.426px 0px 0px;
+  border: 1px solid #ededed;
+  background: #fff;
+  box-shadow: 0px 5.394px 53.94px 0px rgba(210, 210, 210, 0.25);
+  margin-top: 32px;
+  padding: 77px 64px;
+
+  @media screen and (max-width: 640px) {
+    margin-top: unset;
+    padding: 50px 0px !important;
+    border-radius: unset;
+    box-shadow: unset;
+    border: unset;
+  }
+}
+
+.totalBalance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.futureBalance {
+  color: #000;
+  font-family: "Neptune", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 17.6px;
+
+  @media screen and (max-width: 460px) {
+    max-width: 145px;
+  }
+}
+
+.totalRetenciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.retencionesLabel {
+  color: #000;
+  font-family: "Neptune", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 17.6px;
+}
+
+.resultado {
+  color: #3b82f6;
+  font-family: "Neptune", sans-serif;
+  font-size: 35px;
+  font-weight: 400;
+  line-height: 38.5px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 29px;
+  }
+}
+
+.retenciones {
+  color: #000;
+  font-family: "Neptune", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 20px;
+  }
+}
+
+.line {
+  display: flex;
+  flex-direction: column;
+}
+
+.amountTitle {
+  color: #757575;
+  font-family: "Neptune", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 17.6px;
+  margin-bottom: 10px;
+}
+
+.amountContainer {
+  max-width: 371px;
+  font-size: 24px;
+  display: flex;
+  font-weight: 400;
+  border-bottom-width: 1.44px;
+  border-bottom-style: solid;
+  border-bottom-color: #dedede;
+  padding-bottom: 12px;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: 640px) {
+    max-width: unset;
+  }
+}
+
+.mobileTitle {
+  display: none;
+  font-family: "PPFragment", sans-serif !important;
+  font-size: 56px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 61.6px !important;
+
+  @media screen and (max-width: 640px) {
+    display: block !important;
+    font-size: 32px !important;
+    line-height: 40px !important;
+    margin-bottom: 16px;
+  }
+}
+
+.amount {
+  width: 130px;
+  border: none;
+  font-size: 24px;
+  padding: 0;
+}
+
+.currency {
+  color: #000;
+  font-family: "Neptune", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 28.8px;
+}
+
+.amountButtonContainer {
+  display: flex;
+  gap: 12px;
+}
+
+.counterButton {
+  height: 34px;
+  width: 34px;
+  border: 1px solid #bbbbbb;
+  background-color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.counterButton img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.disclaimer {
+  color: #cfcdcd;
+  font-family: "Neptune", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  margin-top: 8px;
+}
+
+.chooseInvestedTerm {
+  color: #757575;
+  font-family: "Neptune", sans-serif;
+  font-size: 16px !important;
+  font-weight: 400;
+  line-height: 17.6px;
+  margin-top: 32px;
+  margin-bottom: 12px;
+
+  @media screen and (max-width: 640px) {
+    margin-top: 20px;
+    margin-bottom: 14px;
+  }
+}
+
+input {
+  outline: none;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.custom-radio {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #bbb;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + .custom-radio {
+  background-color: #2437f5;
+  border: 2px solid #2437f5;
+}
+
+.custom-radio::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: none;
+}
+
+input[type="radio"]:checked + .custom-radio::after {
+  display: block;
+}
+
+.radioGroup {
+  width: 100%;
+  display: grid;
+  column-gap: 2rem;
+  row-gap: 11px;
+  grid-template-columns: 1fr 1fr 300px;
+  margin-bottom: 12px;
+  color: #2c2c2c;
+
+  @media screen and (max-width: 640px) {
+    row-gap: 13px;
+  }
+}
+
+.radioGroupItem {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 9px;
+  font-size: 16px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+  font-weight: 500;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.repeticionesContainer {
+  max-width: 371px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 32px;
+  border-bottom: 1.44px solid #dedede;
+  padding-bottom: 12px;
+
+  @media screen and (max-width: 640px) {
+    margin-top: 26px;
+    max-width: unset;
+  }
+}
+
+.repeticionesContainer > label {
+  padding: 0;
+  margin: 0;
+}
+
+.timeToInvest {
+  color: #757575;
+  font-family: "Neptune", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 17.6px;
+  margin-bottom: 8px !important;
+
+  @media screen and (max-width: 640px) {
+    margin-bottom: 10px !important;
+  }
+}
+
+.repeticionesInputWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.repeticiones {
+  border: none;
+  font-size: 24px;
+  margin: 0;
+  width: 30px;
+
+  @media screen and (max-width: 640px) {
+    padding-bottom: unset;
+  }
+}
+
+.termToInvest {
+  color: #000;
+  font-family: "Neptune", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 28.8px;
+}
+
+.monthsContainer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #cfcdcd;
+  margin-left: 0.2rem;
+}
+
+.termDisclaimerWrapper {
+  display: flex;
+  gap: 4px;
+}
+
+.progressContainer {
+  width: 100%;
+}
+
+/*********** Baseline, reset styles ***********/
+.progress {
+  margin-top: 1rem;
+  appearance: none;
+  /* background: transparent; */
+  cursor: pointer;
+  /* width: 100%; */
+  background: linear-gradient(
+    to right,
+    #000 0%,
+    #000 0%,
+    #dedede 0%,
+    #dedede 100%
+  );
+  border-radius: 8px;
+  height: 7px;
+  width: 100%;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+/* Removes default focus */
+.progress:focus {
+  outline: none;
+}
+
+/******** Chrome, Safari, Opera and Edge Chromium styles ********/
+/* slider track */
+.progress::-webkit-slider-runnable-track {
+  border-radius: 2rem;
+  height: 2px;
+}
+
+/* slider thumb */
+.progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -7px;
+  background-color: #fff;
+  outline: 4px solid #fff;
+  border: 2px solid #000;
+  border-radius: 2rem;
+  height: 1rem;
+  width: 1rem;
+}
+
+/*********** Firefox styles ***********/
+/* slider track */
+.progress::-moz-range-track {
+  background-color: #000000;
+  border-radius: 2rem;
+  height: 2px;
+}
+
+/* slider thumb */
+.progress::-moz-range-thumb {
+  background-color: #000000;
+  border: none;
+  border-radius: 2rem;
+  height: 1rem;
+  width: 1rem;
+}
+
+.progress:focus::-moz-range-thumb {
+  outline: 3px solid #000000;
+  outline-offset: 0.125rem;
+}
+
+.slide {
+  display: none;
+}
+
+/* Responsive */
+@media screen and (max-width: 960px) {
+  .form {
+    flex-direction: column;
+  }
+
+  .graphic {
+    margin-left: 0;
+  }
+
+  .radioGroup {
+    grid-template-columns: 50% 1fr;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .progressContainer {
+    width: 100%;
+    max-width: 390px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    color: #bbbbbb;
+  }
+}
