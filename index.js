@@ -105,6 +105,10 @@ function calcularResultado(radioButtonOption, amount) {
         360) *
       plazo;
 
+    if (retencion < 0) {
+      retencion = 0; // Asignar 0 si la retención es negativa
+    }
+
     let resultado = montoInversion + rendimiento - retencion;
 
     resultado = Number((Math.round(resultado * 100) / 100).toFixed(2));
@@ -114,10 +118,6 @@ function calcularResultado(radioButtonOption, amount) {
 
     // Actualizar monto de inversión para el próximo cálculo
     montoInversion = resultado;
-
-    if (retencion < 0) {
-      retencion = 0; // Asignar 0 si la retención es negativa
-    }
 
     // Agregar el resultado a la lista de retornos
     retenciones.push(retencion);
