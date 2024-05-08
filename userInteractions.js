@@ -137,12 +137,6 @@ function obtenerRadioButtonSeleccionado() {
   return [...radioButtons].find((radioButton) => radioButton.checked)?.value;
 }
 
-function obtenerValoresYZ() {
-  const y = parseFloat(document.getElementById("y").textContent);
-  const z = parseFloat(document.getElementById("z").textContent);
-  return { y, z };
-}
-
 function obtenerElementosDOM() {
   const title = document.getElementById("title");
   const termToInvest = document.getElementById("termToInvest");

@@ -56,3 +56,9 @@ function obtenerValorNumerico() {
   }
   return 0;
 }
+
+function obtenerValoresYZ() {
+  const y = parseFloat(document.getElementById("y").textContent);
+  const z = parseFloat(document.getElementById("z").textContent);
+  return { y, z };
+}

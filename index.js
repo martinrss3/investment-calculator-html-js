@@ -10,24 +10,21 @@ const retencionDecimal = retencion / 100; // Retención en decimal
 const UMA = 108.57; // UMA
 const calculodelUMA = UMA * 12 * 30.4 * 5; // Cálculo del UMA
 
-function calcular(radioButtonOption) {
-  radioButtonOption = radioButtonOption || obtenerRadioButtonSeleccionado();
-
-  const { y, z } = obtenerValoresYZ();
-  const x = obtenerValorNumerico();
+function calcular() {
+  const montoInicial = obtenerValorNumerico();
+  let radioButtonOption = obtenerRadioButtonSeleccionado();
+  const { y: tasa, z: duracion } = obtenerValoresYZ();
 
   let resultado = "0";
 
-  if (x >= 0) {
-    resultado = ((x * y) / 360) * z;
-    resultado = resultado / 100;
-    document.getElementById("resultado").textContent = resultado;
+  resultado = ((montoInicial * tasa) / 360) * duracion;
 
-    const amount = x;
-    calcularResultado(radioButtonOption, amount);
-  } else {
-    document.getElementById("resultado").textContent = "$0";
-  }
+  resultado = Number((Math.round(resultado * 100) / 100).toFixed(2));
+
+  resultado = resultado / 100;
+  document.getElementById("resultado").textContent = resultado;
+
+  calcularResultado(radioButtonOption, montoInicial);
 }
 
 let inversiones = [];
@@ -98,7 +95,19 @@ function calcularResultado(radioButtonOption, amount) {
 
   for (let i = 0; i < repeticionesMultiplicadas; i++) {
     let rendimiento = montoInversion * ((tasaInteres / 360) * plazo);
-    let resultado = montoInversion + rendimiento;
+
+    rendimiento = Number((Math.round(rendimiento * 100) / 100).toFixed(2));
+
+    // Calcular la retención para la duración actual
+    var retencion =
+      (((parseFloat(montoInversion).toFixed(2) - calculodelUMA) *
+        retencionDecimal) /
+        360) *
+      plazo;
+
+    let resultado = montoInversion + rendimiento - retencion;
+
+    resultado = Number((Math.round(resultado * 100) / 100).toFixed(2));
 
     const inversion = resultado;
     const rendimientoFormateado = rendimiento;
@@ -106,9 +115,16 @@ function calcularResultado(radioButtonOption, amount) {
     // Actualizar monto de inversión para el próximo cálculo
     montoInversion = resultado;
 
+    if (retencion < 0) {
+      retencion = 0; // Asignar 0 si la retención es negativa
+    }
+
     // Agregar el resultado a la lista de retornos
+    retenciones.push(retencion);
     retornos.push(+rendimientoFormateado);
     inversiones.push(inversion);
+
+    sumaRetenciones += retencion;
 
     // Crear un nuevo elemento de lista y agregarlo a la lista de resultados
     const listItem = document.createElement("li");
@@ -127,46 +143,9 @@ function calcularResultado(radioButtonOption, amount) {
     }
   }
 
-  for (var i = 1; i <= repeticiones; i++) {
-    var duracion = i; // Duración actual
-    let rendimiento = montoInversion * ((tasaInteres / 360) * plazo);
-    let resultado = montoInversion + rendimiento;
-
-    if (duracion === 1) {
-      montoInversion = parseFloat(
-        document.getElementById("x").value.replace(/\D/g, "")
-      );
-    } else {
-      montoInversion = resultado;
-    }
-
-    // Calcular la retención para la duración actual
-    var retencion =
-      (((parseFloat(montoInversion).toFixed(2) - calculodelUMA) *
-        retencionDecimal) /
-        360) *
-      plazo;
-
-    if (retencion < 0) {
-      retencion = 0; // Asignar 0 si la retención es negativa
-    }
-
-    // Guardar la retención en el array
-    retenciones.push(retencion);
-
-    // Sumar la retención actual a la suma total
-    sumaRetenciones += retencion;
-  }
-
   // Mostrar el resultado en el elemento con el id "retenciones"
   document.getElementById("retenciones").textContent =
     "$" + formatNumber(sumaRetenciones);
-
-  const labelsQuantity = retornos.length;
-  const labels = [];
-  for (let i = 0; i < labelsQuantity; i++) {
-    labels.push(String(i));
-  }
 
   // Obtener el valor particular a sumar
   let montoAInvertir = parseFloat(
@@ -220,46 +199,9 @@ function calcularResultado(radioButtonOption, amount) {
     inversiones[inversiones.length - 1]
   );
 
-  const resultadoFinalConRetenciones =
-    resultadoFinalConRendimientos - sumaRetenciones;
+  const resultadoFinalConRetenciones = resultadoFinalConRendimientos;
 
   // Mostrar el resultado final con los rendimientos sumados en el elemento 'resultado'
-  document.getElementById("resultado").textContent =
-    "$" + formatNumber(resultadoFinalConRetenciones);
-}
-
-function calcularResultadoFinal(
-  repeticiones,
-  tasaInteres,
-  plazo,
-  montoInversion,
-  retencionDecimal
-) {
-  let sumaRetenciones = 0;
-
-  for (let i = 1; i <= repeticiones; i++) {
-    let rendimiento = montoInversion * ((tasaInteres / 360) * plazo);
-    let resultado = montoInversion + rendimiento;
-
-    if (i !== 1) {
-      montoInversion = resultado;
-    }
-
-    const retencion =
-      (((montoInversion - calculodelUMA) * retencionDecimal) / 360) * plazo;
-
-    if (retencion < 0) {
-      retencion = 0;
-    }
-
-    sumaRetenciones += retencion;
-  }
-
-  const resultadoFinalConRendimientos = montoInversion;
-  const resultadoFinalConRetenciones =
-    resultadoFinalConRendimientos - sumaRetenciones;
-
-  // Actualiza el resultado final en el elemento 'resultado'
   document.getElementById("resultado").textContent =
     "$" + formatNumber(resultadoFinalConRetenciones);
 }
